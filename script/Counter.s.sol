@@ -10,10 +10,10 @@ contract CounterScript is Script {
     function setUp() public {}
 
     function run() public {
-        vm.startBroadcast();
+        uint256 pk = vm.promptSecretUint("Enter the private key");
 
+        vm.startBroadcast(pk);
         counter = new Counter();
-
         vm.stopBroadcast();
     }
 }
