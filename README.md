@@ -1,66 +1,13 @@
-## Foundry
+# Foundry bug reproduction
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+When a contract must be linked against external libraries, and a Foundry script deploys such contract, prompts are
+shown twice.
 
-Foundry consists of:
+Reproduction steps:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+1. Launch an anvil instance: `anvil -a 1`
+2. Launch script: `forge script -f http://localhost:8545 --broadcast script/Counter.s.sol:CounterScript`
+3. Observe that a prompt shows up and paste the first anvil private key: `0xac0974bec3...`
+4. Observe that a second identical prompt is displayed
 
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+If the deployed contract does not have external libraries that must be linked, the problem does not happen.
